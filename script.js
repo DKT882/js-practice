@@ -14,12 +14,6 @@ let text='Gaming'
 console.log(pdtName.includes(text) )
 
 
-// async function getData(){
-//     let fukk=await fetch('https://fakestoreapi.com/products')
-//     let data=await fukk.json()
-//     console.log(data)
-// }
-// getData()
 
 let couponCode='save20'
 console.log(couponCode.toUpperCase())
