@@ -1,0 +1,66 @@
+body{
+background:#f4f7fc;
+font-family:Poppins,sans-serif;
+}
+
+.profile-card{
+border:none;
+border-radius:18px;
+}
+
+.avatar{
+width:120px;
+height:120px;
+border-radius:50%;
+border:5px solid orange;
+}
+
+.stat-card{
+padding:30px;
+text-align:center;
+border:none;
+border-radius:18px;
+transition:.3s;
+}
+
+.stat-card:hover{
+transform:translateY(-5px);
+box-shadow:0 15px 30px rgba(0,0,0,.15);
+}
+
+.stat-card h3{
+font-size:40px;
+font-weight:bold;
+color:#ff9800;
+}
+
+.difficulty{
+padding:25px;
+border:none;
+border-radius:15px;
+text-align:center;
+color:white;
+}
+
+.easy{
+background:#2ecc71;
+}
+
+.medium{
+background:#f39c12;
+}
+
+.hard{
+background:#e74c3c;
+}
+
+.card{
+border:none;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.table td{
+vertical-align:middle;
+}
+

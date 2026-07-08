@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <title>LeetCode Dashboard</title>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold">LeetCode Dashboard</a>
+        </div>
+    </nav>
+    <div class="container py-5">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-7">
+                <div class="input-group input-group-lg">
+                    <input type="text" class="form-control" placeholder="Enter LeetCode Username">
+                    <button class="btn btn-warning">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile -->
+
+        <div class="card shadow-lg profile-card mb-4">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-2 text-center">
+                        <!-- <img src="avatar.png" class="avatar"> -->
+                    </div>
+                    <div class="col-md-10">
+                        <h2>Dharmender</h2>
+                        <p>@dharmender</p>
+                        <p>Global Rank : 12450</p>
+                        <p>Contest Rating : 1987</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <h3>🔥 142</h3>
+                    <p>Current Streak</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <h3>735</h3>
+                    <p>Questions Solved</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <h3>89%</h3>
+                    <p>Acceptance</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <h3>2100</h3>
+                    <p>Contest Rating</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Difficulty -->
+
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="card difficulty easy">
+                    <h4>Easy</h4>
+                    <h2>280</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card difficulty medium">
+                    <h4>Medium</h4>
+                    <h2>370</h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card difficulty hard">
+                    <h4>Hard</h4>
+                    <h2>85</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
