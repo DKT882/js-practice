@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Card from './components/Card.jsx'
 import Button from './components/Button.jsx'
+import Parent from './components/statelifting/Parent.jsx'
 import './App.css'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Button increment={handleClick}>
         {count}
       </Button>
+      <Parent></Parent>
     </>
   )
 }
