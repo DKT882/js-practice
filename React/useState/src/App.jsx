@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Card from './components/Card.jsx'
 import Button from './components/Button.jsx'
+import ConditionalRendering from './components/ConditionalRendering.jsx'
 import Parent from './components/statelifting/Parent.jsx'
 import './App.css'
 
@@ -16,6 +17,7 @@ function App() {
         {count}
       </Button>
       <Parent></Parent>
+      <ConditionalRendering></ConditionalRendering>
     </>
   )
 }
