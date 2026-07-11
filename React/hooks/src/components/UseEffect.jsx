@@ -1,4 +1,5 @@
 // import { useEffect } from 'react'
+import Timmer from './useEffect/Timmer'
 import Logger from './useEffect/Logger'
 function useEffect() {
     // const [count, setCount] = useState(0)
@@ -51,6 +52,7 @@ function useEffect() {
     return (
         <>
             <Logger/>
+            <Timmer/>
             {/* <p>count is : {count}</p>
             <button onClick={handleclick}>Click me </button>
             <p>total is : {total}</p>
