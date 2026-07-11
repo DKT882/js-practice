@@ -12,7 +12,7 @@ function Timmer() {
             console.log('Time to stop')
             clearInterval(interval)
         }
-    },[])
+    })
     return (
         <div>
             <h1 style={{color:'black'}} >Seconds : {seconds}</h1>
