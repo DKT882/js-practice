@@ -1,0 +1,18 @@
+*{
+    transition: all 0.5s;
+}
+.Navbar ul li{
+    list-style-type: none;
+}
+.Navbar ul{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 40px;
+}
+a{
+    text-decoration: none;
+}
+.isActive{
+    color: rgb(196, 30, 72);
+}
