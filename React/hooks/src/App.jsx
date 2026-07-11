@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import UseEffect from './components/UseEffect.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
-  useEffect(() => {
-    alert(count)
-    setCount(count+1)
-  })
+
+
+
   return (
     <>
+    <UseEffect/>
     </>
   )
-}
+} 
 
 export default App
