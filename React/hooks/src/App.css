@@ -1,0 +1,9 @@
+#thme{
+    height: 500px;
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: beige;
+    transition: all 0.5s;
+}
