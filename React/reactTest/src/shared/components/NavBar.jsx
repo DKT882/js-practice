@@ -1,7 +1,7 @@
 function NavBar() {
   return (
     <nav className="navbar">
-      <div className="logo">DKT Profile</div>
+      <div className="logo">DKT LOGO </div>
       <ul>
         <li>
           <a href="#intro">Home</a>
