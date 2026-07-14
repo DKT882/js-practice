@@ -1,12 +1,12 @@
-import { useState } from 'react'
+import NavBar from './shared/components/NavBar'
+import ProfilePage from './features/profile/ProfilePage'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-
+      <NavBar />
+      <ProfilePage />
     </>
   )
 }
