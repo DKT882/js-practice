@@ -1,24 +1,14 @@
-import { useState, useEffect } from 'react'
+import NavBar from './components/NavBar'
+import Form from './components/Form'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [count1, setCount1] = useState(0)
-  useEffect(() => {
-    setCount1(count1 + 1)
-  }, [count])
   return (
-    <>
-      <div>
-        <button onClick={() => {
-          setCount(count + 1)
-        }}>Increament</button>
-        <p>count: {count} </p>
-        <button onClick={() => {
-          setCount1(count1 + 1)
-        }}>Increament Count2</button>
-        <p>count2 : {count1} </p>
-      </div>
-    </>
+    <div className="min-h-screen bg-slate-100 text-slate-800">
+      <NavBar />
+      <main className="mx-auto flex max-w-5xl justify-center align-center">
+        <Form />
+      </main>
+    </div>
   )
 }
 
