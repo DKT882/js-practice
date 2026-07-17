@@ -68,7 +68,8 @@ const router = createBrowserRouter(
         <NavBar></NavBar>
         <Prams />
       </div>
-    },{
+    },
+    {
       path:'*',
       element:
       <div>
