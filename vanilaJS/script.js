@@ -1,4 +1,4 @@
-import { add, subtract } from './mosulw.js';
+import { add, subtract } from './module.js';
 let employee="rahul"
 let empID="12345dsaf"
 let depart="IT"
