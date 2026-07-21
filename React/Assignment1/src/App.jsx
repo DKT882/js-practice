@@ -5,9 +5,10 @@ import Homepage from './features/home/Homepage'
 import Profile from './features/profile/pages/Profile'
 import DUMMY_COURSES from './data/courses'
 import SingleCourse from './features/courses/SingleCourse'
+import CoursePage from './features/courses/CoursePage'
 
 import './App.css'
-
+console.log("AddCourse Rendered");
 function App() {
     // console.log(window.location.pathname)
 
@@ -18,7 +19,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Homepage></Homepage>}></Route>
           <Route path='/home' element={<Homepage></Homepage>}></Route>
-          <Route path='/course' element={<Homepage></Homepage>}></Route>
+          <Route path='/course' element={<CoursePage/>}></Route>
           <Route path='/profile' element={<Profile></Profile>}></Route>
           <Route path='/*' element={<div>Error 404: PageNot Found Try /about or /home or /</div>}></Route>
           {DUMMY_COURSES.map((course) => {
