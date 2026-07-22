@@ -8,7 +8,7 @@ import SingleCourse from './features/courses/SingleCourse'
 import CoursePage from './features/courses/CoursePage'
 
 import './App.css'
-console.log("AddCourse Rendered");
+// console.log("AddCourse Rendered");
 function App() {
     // console.log(window.location.pathname)
 
