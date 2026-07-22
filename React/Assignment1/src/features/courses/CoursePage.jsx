@@ -6,7 +6,7 @@ const CoursePage = () => {
         register,
         handleSubmit,
         reset,
-        formState: { errors, isSubmitting, isSubmitted }
+        formState: { errors}
     } = useForm()
     const Submit = (data) => {
         console.log(data.title)
