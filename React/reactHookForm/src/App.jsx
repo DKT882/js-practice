@@ -23,6 +23,7 @@ function App() {
     watch,
     formState: { errors,isSubmitting },
     //isSubmitting flag shows the form is submited or not (form in submitting state)
+    // error returns 
   } = useForm()
   const  formSubmit =async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 5000))
