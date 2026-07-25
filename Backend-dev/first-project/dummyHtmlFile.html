@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>DKT this is root file 
+        its synitex is : 
+    </h1>
+    <pre>
+app.get('/',(req,res) => {
+    // res.send('this is get request')
+    res.sendFile('./dummyHtmlFile.html',
+    {root:__dirname}
+    )
+})
+    </pre>
+</body>
+</html>

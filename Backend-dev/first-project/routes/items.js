@@ -1,0 +1,39 @@
+const express = require('express');
+const router = express.Router();
+const path = require("path");
+
+// // middleware that is specific to this router
+// const timeLog = (req, res, next) => {
+//   console.log('Time: ', Date.now());
+//   next();
+// };
+// router.use(timeLog);
+
+// define the home page route
+// router.get('/', (req, res) => {
+//     res.send('Birds home page');
+// });
+// define the about route
+router.get('/about', (req, res) => {
+    res.send('About birds');
+});
+router.get('/', (req, res) => {
+    // res.send('this is get request')
+    res.sendFile(path.join(__dirname, "../dummyHtmlFile.html"))
+})
+router.get("/json", (req, res) => {
+    res.json({
+        "x": 1, "y": 2, "z": 3
+    })
+})
+router.post('/items', (req, res) => {
+    res.send('this is post request')
+})
+router.put('/items/:id', (req, res) => {
+    res.send('this is put request')
+})
+router.delete('/items/:id', (req, res) => {
+    res.send('this is delete request')
+})
+
+module.exports = router;
