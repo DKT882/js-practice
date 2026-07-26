@@ -1,6 +1,5 @@
 const express=require('express')
 const app=express()
-
 const port=3000
 
 
@@ -13,25 +12,32 @@ app.use('/.well-known/appspecific/com.chrome.devtools.json', (req, res) => res.s
 
 
 //creation of the middleware
-const loggingMiddleware= function (req,res,next){
-    console.log(`Incoming request for: ${req.url}`);
-    console.log("it's loggingMiddleware")
-    next()
-}
+// const loggingMiddleware= function (req,res,next){
+//     console.log(`Incoming request for: ${req.url}`);
+//     console.log("it's loggingMiddleware")
+//     next()
+// }
 //loading middleware into application
-app.use(loggingMiddleware)
+// app.use(loggingMiddleware)
 //creation of the middleware
-const authMiddleware= function (req,res,next){
-    console.log("it's authMiddleware")
-    next()
-}
-app.use(authMiddleware)
+// const authMiddleware= function (req,res,next){
+//     console.log("it's authMiddleware")
+//     next()
+// }
+// app.use(authMiddleware)
 //creation of the middleware
-const velidationMiddleware= function (req,res,next){
-    console.log("it's velidationMiddleware")
-    next()
-}
-app.use(velidationMiddleware)
+// const velidationMiddleware= function (req,res,next){
+//     console.log("it's velidationMiddleware")
+//     next()
+// }
+// app.use(velidationMiddleware)
+
+
+const admin_rout=require('./routes/route.js') // mounting the routes
+app.use('/api',admin_rout)
+// /api/student
+// /api/admin
+
 
 app.get('/',(req,res) => {
     console.log(req.body)
