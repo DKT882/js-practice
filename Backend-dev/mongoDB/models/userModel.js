@@ -14,7 +14,7 @@ const MySchema = new Schema({
         type: Number,
     },
     createdAt: {
-        type: data,
+        type: Date,
         default: Date.now,
     }
 })
