@@ -22,7 +22,15 @@ router.get('/user',async (req,res) => {
 // create
 router.post('/user', async (req, res) => {
     try {
-        const { name, age, weight } = req.body;
+        const { name, age, weight } = req.body ?? {};
+
+        if (!name || age === undefined || weight === undefined) {
+            return res.status(400).json({
+                success: false,
+                message: 'name, age, and weight are required. Send JSON with Content-Type: application/json.'
+            });
+        }
+
         const newUser = new UserModel({ name, age, weight });
         await newUser.save();
         res.status(200).json({
@@ -36,5 +44,7 @@ router.post('/user', async (req, res) => {
         });
     }
 });
+
+// update
 
 export default router;

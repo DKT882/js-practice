@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const MySchema = new Schema({
     name: {
-        type: String,
+        type: String, 
         required: true,
         maxlength: 50,
     },
