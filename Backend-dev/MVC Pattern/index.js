@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
     res.send('The BKND server is started')
     console.log('Hello')
 })
+app.use((req, res) => {
+    res.send('this is for all path use "*"')
+    console.log('Hello')
+})
 
 app.listen(port, () => {
     console.log(`server is running on port https://localhost/${port}`)
