@@ -5,10 +5,13 @@ const findHospitalsButton = document.getElementById("find-hospitals");
 const map = L.map("map").setView([20, 0], 2);
 const hospitalMarkers = L.layerGroup().addTo(map);
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
   maxZoom: 19,
-  attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+  attribution: "Tiles &copy; Esri; hospital data &copy; OpenStreetMap contributors",
 }).addTo(map);
+
+// The map is in a CSS grid; calculate its final dimensions after the page is laid out.
+requestAnimationFrame(() => map.invalidateSize());
 
 async function loadHospitals(latitude, longitude) {
   // Search within 10 km of the current location.
@@ -54,15 +57,26 @@ async function loadHospitals(latitude, longitude) {
         const latitude = place.lat ?? place.center?.lat;
         const longitude = place.lon ?? place.center?.lon;
         if (latitude !== undefined && longitude !== undefined) {
-          L.marker([latitude, longitude])
+          const marker = L.circleMarker([latitude, longitude], {
+            radius: 9,
+            color: "#ffffff",
+            weight: 2,
+            fillColor: "#e53935",
+            fillOpacity: 1,
+          })
             .addTo(hospitalMarkers)
             .bindPopup(`<strong>${escapeHtml(name)}</strong>${address ? `<br>${escapeHtml(address)}` : ""}`);
+          item.addEventListener("click", () => {
+            map.setView([latitude, longitude], 16);
+            marker.openPopup();
+          });
           markerLocations.push([latitude, longitude]);
         }
       });
 
       if (markerLocations.length > 0) {
-        map.fitBounds(markerLocations, { padding: [30, 30], maxZoom: 14 });
+        // Keep this compact overview wide enough to show every returned hospital together.
+        map.fitBounds(markerLocations, { padding: [20, 20], maxZoom: 13 });
       }
     }
 
