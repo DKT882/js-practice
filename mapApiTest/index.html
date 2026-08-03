@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overpass API Result</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 2rem; background: #f7f7f8; }
+        h1 { font-size: 1.5rem; }
+        #status { color: #555; }
+        #output { white-space: pre-wrap; overflow-wrap: anywhere; padding: 1rem; border-radius: .5rem; background: #fff; border: 1px solid #ddd; }
+        .error { color: #b42318; border-color: #fecdca; background: #fff5f4; }
+        button { padding: .65rem 1rem; margin: 0 0 1rem; cursor: pointer; }
+        #hospitals { padding-left: 1.25rem; }
+    </style>
+</head>
+<body>
+    <h1>Hospitals near you</h1>
+    <button id="find-hospitals" type="button">Find nearby hospitals</button>
+    <p id="status">Select the button to use your current location.</p>
+    <ul id="hospitals"></ul>
+    <pre id="output" aria-live="polite"></pre>
+
+    <script src="map.js"></script>
+</body>
+</html>
