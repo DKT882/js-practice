@@ -2,6 +2,13 @@ const output = document.getElementById("output");
 const status = document.getElementById("status");
 const hospitals = document.getElementById("hospitals");
 const findHospitalsButton = document.getElementById("find-hospitals");
+const map = L.map("map").setView([20, 0], 2);
+const hospitalMarkers = L.layerGroup().addTo(map);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19,
+  attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+}).addTo(map);
 
 async function loadHospitals(latitude, longitude) {
   // Search within 10 km of the current location.
@@ -14,6 +21,7 @@ async function loadHospitals(latitude, longitude) {
     output.textContent = "";
     output.classList.remove("error");
     hospitals.replaceChildren();
+    hospitalMarkers.clearLayers();
 
     const response = await fetch("https://overpass-api.de/api/interpreter", {
       method: "POST",
@@ -29,6 +37,7 @@ async function loadHospitals(latitude, longitude) {
     const places = result.elements;
     status.textContent = `Found ${places.length} hospital${places.length === 1 ? "" : "s"} within 10 km.`;
 
+    const markerLocations = [];
     if (places.length === 0) {
       hospitals.textContent = "No hospitals were found in this radius.";
     } else {
@@ -40,7 +49,21 @@ async function loadHospitals(latitude, longitude) {
           .join(" ");
         item.textContent = address ? `${name} — ${address}` : name;
         hospitals.append(item);
+
+        // Nodes use lat/lon; ways and relations use the center returned by Overpass.
+        const latitude = place.lat ?? place.center?.lat;
+        const longitude = place.lon ?? place.center?.lon;
+        if (latitude !== undefined && longitude !== undefined) {
+          L.marker([latitude, longitude])
+            .addTo(hospitalMarkers)
+            .bindPopup(`<strong>${escapeHtml(name)}</strong>${address ? `<br>${escapeHtml(address)}` : ""}`);
+          markerLocations.push([latitude, longitude]);
+        }
       });
+
+      if (markerLocations.length > 0) {
+        map.fitBounds(markerLocations, { padding: [30, 30], maxZoom: 14 });
+      }
     }
 
     output.textContent = JSON.stringify(result, null, 2);
@@ -51,6 +74,12 @@ async function loadHospitals(latitude, longitude) {
     output.classList.add("error");
     console.error(error);
   }
+}
+
+function escapeHtml(text) {
+  const element = document.createElement("div");
+  element.textContent = text;
+  return element.innerHTML;
 }
 
 function getCurrentLocation() {
@@ -66,6 +95,12 @@ function getCurrentLocation() {
   navigator.geolocation.getCurrentPosition(
     ({ coords }) => {
       findHospitalsButton.disabled = false;
+      map.setView([coords.latitude, coords.longitude], 13);
+      L.circleMarker([coords.latitude, coords.longitude], {
+        radius: 8,
+        color: "#2563eb",
+        fillOpacity: 0.8,
+      }).addTo(map).bindPopup("Your location");
       loadHospitals(coords.latitude, coords.longitude);
     },
     (error) => {
