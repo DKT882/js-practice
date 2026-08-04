@@ -2,8 +2,11 @@ const output = document.getElementById("output");
 const status = document.getElementById("status");
 const hospitals = document.getElementById("hospitals");
 const findHospitalsButton = document.getElementById("find-hospitals");
+const routeInfo = document.getElementById("route-info");
 const map = L.map("map").setView([20, 0], 2);
 const hospitalMarkers = L.layerGroup().addTo(map);
+const routeLayer = L.geoJSON(null, { style: { color: "#2563eb", weight: 5 } }).addTo(map);
+let currentLocation;
 
 L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
   maxZoom: 19,
@@ -25,6 +28,8 @@ async function loadHospitals(latitude, longitude) {
     output.classList.remove("error");
     hospitals.replaceChildren();
     hospitalMarkers.clearLayers();
+    routeLayer.clearLayers();
+    routeInfo.textContent = "";
 
     const response = await fetch("https://overpass-api.de/api/interpreter", {
       method: "POST",
@@ -57,6 +62,8 @@ async function loadHospitals(latitude, longitude) {
         const latitude = place.lat ?? place.center?.lat;
         const longitude = place.lon ?? place.center?.lon;
         if (latitude !== undefined && longitude !== undefined) {
+          const directDistance = calculateDistance(currentLocation.latitude, currentLocation.longitude, latitude, longitude);
+          item.textContent = `${name} — ${formatDistance(directDistance)} away${address ? ` · ${address}` : ""}`;
           const marker = L.circleMarker([latitude, longitude], {
             radius: 9,
             color: "#ffffff",
@@ -66,10 +73,9 @@ async function loadHospitals(latitude, longitude) {
           })
             .addTo(hospitalMarkers)
             .bindPopup(`<strong>${escapeHtml(name)}</strong>${address ? `<br>${escapeHtml(address)}` : ""}`);
-          item.addEventListener("click", () => {
-            map.setView([latitude, longitude], 16);
-            marker.openPopup();
-          });
+          const selectHospital = () => showRoute(latitude, longitude, name, marker);
+          item.addEventListener("click", selectHospital);
+          marker.on("click", selectHospital);
           markerLocations.push([latitude, longitude]);
         }
       });
@@ -96,6 +102,47 @@ function escapeHtml(text) {
   return element.innerHTML;
 }
 
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const earthRadiusMetres = 6371000;
+  const toRadians = (degrees) => (degrees * Math.PI) / 180;
+  const deltaLat = toRadians(lat2 - lat1);
+  const deltaLon = toRadians(lon2 - lon1);
+  const a = Math.sin(deltaLat / 2) ** 2
+    + Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) * Math.sin(deltaLon / 2) ** 2;
+  return earthRadiusMetres * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function formatDistance(metres) {
+  return metres >= 1000 ? `${(metres / 1000).toFixed(1)} km` : `${Math.round(metres)} m`;
+}
+
+async function showRoute(latitude, longitude, hospitalName, marker) {
+  if (!currentLocation) return;
+
+  routeInfo.textContent = `Finding a driving route to ${hospitalName}...`;
+  routeLayer.clearLayers();
+
+  try {
+    const start = `${currentLocation.longitude},${currentLocation.latitude}`;
+    const destination = `${longitude},${latitude}`;
+    const response = await fetch(
+      `https://router.project-osrm.org/route/v1/driving/${start};${destination}?overview=full&geometries=geojson`
+    );
+    if (!response.ok) throw new Error("The routing service is unavailable.");
+
+    const data = await response.json();
+    const route = data.routes?.[0];
+    if (!route) throw new Error("No driving route was found.");
+
+    routeLayer.addData({ type: "Feature", properties: {}, geometry: route.geometry });
+    map.fitBounds(routeLayer.getBounds(), { padding: [30, 30] });
+    marker.openPopup();
+    routeInfo.textContent = `Route to ${hospitalName}: ${formatDistance(route.distance)} · about ${Math.ceil(route.duration / 60)} min by car.`;
+  } catch (error) {
+    routeInfo.textContent = `Could not load a driving route: ${error.message}`;
+  }
+}
+
 function getCurrentLocation() {
   if (!navigator.geolocation) {
     status.textContent = "Geolocation is not supported by this browser.";
@@ -109,6 +156,7 @@ function getCurrentLocation() {
   navigator.geolocation.getCurrentPosition(
     ({ coords }) => {
       findHospitalsButton.disabled = false;
+      currentLocation = { latitude: coords.latitude, longitude: coords.longitude };
       map.setView([coords.latitude, coords.longitude], 13);
       L.circleMarker([coords.latitude, coords.longitude], {
         radius: 8,

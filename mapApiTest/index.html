@@ -17,6 +17,7 @@
         .results-panel h2 { margin-bottom: .75rem; font-size: 1.15rem; }
         #hospitals { padding-left: 1.25rem; }
         #hospitals li { margin: .6rem 0; cursor: pointer; }
+        #route-info { margin: .75rem 0; font-weight: 600; color: #0f5132; }
         #map { height: 100%; min-width: 0; }
         @media (max-width: 700px) { .map-layout { grid-template-columns: 1fr; grid-template-rows: 220px 360px; height: 580px; } .results-panel { grid-row: 2; border-right: 0; border-top: 1px solid #ddd; } #map { grid-row: 1; } }
         /* Essential Leaflet layout styles, kept locally so map tiles stay inside #map. */
@@ -46,6 +47,7 @@
     <h1>Hospitals near you</h1>
     <button id="find-hospitals" type="button">Find nearby hospitals</button>
     <p id="status">Select the button to use your current location.</p>
+    <p id="route-info" aria-live="polite"></p>
     <div class="map-layout">
         <aside class="results-panel">
             <h2>Results</h2>
