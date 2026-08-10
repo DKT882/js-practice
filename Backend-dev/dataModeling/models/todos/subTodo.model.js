@@ -12,7 +12,7 @@ const subTodoSchema = new mongoose.Schema(
       required: true,
     },
     coreatedBy: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Tyep.ObjectId,
       ref: 'User',
     },
   },
