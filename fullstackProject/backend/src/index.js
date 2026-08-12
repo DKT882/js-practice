@@ -1,14 +1,22 @@
 // creatre server only
 
 import express from 'express';
+import mongoose from 'mongoose'
 const app=express()
-const PORT=3000;
+import { DB_NAME } from './content';
 
-
-app.get('/',(req,res) => {
-    res.send('Hello boy')
-})
-
-app.listen(PORT,() => {
-    console.log(`Hello boy this is server http://localhost:${3000}/ `)
-})
+;(async() => {
+    try {
+        await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
+        app.on("error",() => {
+            console.log("ERR: ", error)
+            throw error
+        })
+        app.listen(process.env.PORT,() => {
+            console.log('the app is running')
+        })
+    } catch (error) {
+        console.log("ERROR: ",error)
+        throw error
+    }
+})()
