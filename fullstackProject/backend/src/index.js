@@ -1,4 +1,23 @@
-// creatre server only
+// require('dotenv').config({path: './env'});
+import dotenv from 'dotenv';
+import mongoose from "mongoose";
+import connectDB from "./db/index.js";
+import { DB_NAME } from "./content.js";
+
+dotenv.config()
+await connectDB()
+
+
+
+
+
+
+
+
+
+
+/*
+
 
 import express from 'express';
 import mongoose from 'mongoose'
@@ -20,3 +39,6 @@ import { DB_NAME } from './content';
         throw error
     }
 })()
+
+
+*/
