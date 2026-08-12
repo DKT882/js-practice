@@ -10,7 +10,7 @@ dotenv.config()
 // app.use(cors())
 app.use(cors({ origin: "http://localhost:5173" })); // cores is useable in this localhost link
 app.use(express.json());
-
+// CORS and express.json() are a middlewares and .use also a middleware
 
 //routers using express router
 app.use('/api',usersRouter)
