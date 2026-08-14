@@ -4,11 +4,15 @@ import mongoose from "mongoose";
 import express from "express";
 import connectDB from "./db/index.js";
 import { DB_NAME } from "./content.js";
+
 const app=express()
 dotenv.config()
-await connectDB()
+const PORT=process.env.PORT||8000
+// await connectDB() use await or .then any one ether await async or .then
+// if use await then use tryCatch syntax
+connectDB()
 .then(() => {
-    app.listen(process.env.PORT||8000,() => {
+    app.listen(PORT,() => {
         console.log(`Server is running on port ${process.env.PORT}`)
     })
 })

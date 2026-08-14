@@ -1,6 +1,6 @@
 const asyncHandler = (requestHandler)=>{
-    (req,res,next) => {
-        Promise.resolve(requestHandler(req,res,next)).catch((error) =>next(error))
+    return (req,res,next) => { // it returens express middleare
+        Promise.resolve(requestHandler(req,res,next)).catch((error) =>next(error)) // it return promise because async always return promise.
     }
 }
 
