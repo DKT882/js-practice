@@ -46,3 +46,43 @@ app.get('/',(req,res) => {
 app.listen(port,() => {
     console.log(`the server started on ${3000}`)
 })
+
+
+
+let items = [{ id: 1, name: 'Learn React' }];
+
+app.use(cors());
+app.use(express.json());
+
+app.use((req, res, next) => {
+    console.log(${req.method} ${req.url})
+    next()
+});
+
+app.use((req, res, next) => {
+    console.log('Middleware 1');
+    next()
+});
+
+app.use((req, res, next) => {
+    console.log('Middleware 2');
+    next();
+});
+
+function Ab1(req, res, next) {
+    console.log('Middleware for user1');
+    next();
+}
+
+function Ab2(req, res, next) {
+    console.log('Middleware for user2');
+    next();
+}
+
+app.get('/user1', Ab1, (req, res) => {
+    res.json(items);
+});
+
+app.get('/user2', Ab2, (req, res) => {
+    res.json(items);
+});
