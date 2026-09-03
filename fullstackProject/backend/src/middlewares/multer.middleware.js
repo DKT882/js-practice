@@ -9,7 +9,6 @@ const storage = multer.diskStorage({
         // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) // this can chagne the filename with unique filename
         // cb(null, file.fieldname + '-' + uniqueSuffix)
         cb(null, file.originalname)
-
     }
 })
 
