@@ -5,7 +5,7 @@ import pool from './Package/config/d.js'
 
 const router = express.Router()
 
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -23,4 +23,32 @@ router.post('/register', async (req, res) => {
     } catch (error) {
         next(error)
     }
+    next()
+})
+
+
+
+router.post('/login',async (req,res, next) => {
+    try {
+        const {emial,password}=req.body;
+        const result=await pool.query(
+            "SELECT * FROM users WHERE email = $1",
+            [email]
+        )
+        const user=result.rows[0]
+        if (!user){return res.status(401).json({message:"Invalid email or password"})}
+
+        const isMatch = await bcrypt.compare(password,user.password)
+
+        const token = jwt.sign(
+            {userId:userid,email:user.email},
+            process.env.JWT_SECRET,
+            {expiresIn:'1h'}
+        )
+        res.status(200).json({message:"LOGIN SUCCESSFUL",token})
+    } catch (error) {
+        next(error)
+    }
+    
+    next()
 })
