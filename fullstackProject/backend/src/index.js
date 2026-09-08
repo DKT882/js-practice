@@ -3,7 +3,9 @@ import dotenv from 'dotenv';
 import connectDB from "./db/index.js";
 import { app } from "./app.js";
 
-dotenv.config()
+dotenv.config({
+    path:'./.env'
+})
 const PORT=process.env.PORT||8000
 // await connectDB() use await or .then any one ether await async or .then
 // if use await then use tryCatch syntax
