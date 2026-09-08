@@ -1,23 +1,23 @@
-import express from 'express'
-import cors from 'cors'
-import authRoutes from './authRoutes.js'
-import {requireAuth} from './Package/middleware/requireAuth.js'
+import express from 'express';
+import cors from 'cors';
+import pool from './config/db.js';
 
-const app=express();
-app.use(cors())
-app.use(express.json())
-app.use('./api/auth',authRoutes)
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-app.get('./api/protected',requireAuth,(req,res)=>{
-    res.status(200).json({message:'YOU have accessed a protected route'})
-    user:req.user
+
+app.get("/users" , async (req,res) => {
+    try {
+        const result = await pool.query("SELECT * FROM users");
+        res.status(200).json(result.rows);
+    }
+    catch (error) {
+        res.status(500).json({message:"Internal server error"});
+    }
 })
 
-app.use((err,req,res,next) => {
-    console.error(err.stack)
-    res.status(500).json({message:'internal server error'})
-})
 
-app.listen(3000,() => {
-    console.log('server is running on 3000')
-})
+app.listen(3000, () => {
+    console.log("Server is running on port 3000");
+});
